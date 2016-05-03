@@ -3,7 +3,6 @@ from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 
-
 engine = create_engine('sqlite:///docmg.db', echo=True)
 Base = declarative_base()
 
