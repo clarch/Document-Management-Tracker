@@ -1,6 +1,7 @@
-from app import app
+from app import create_app
 from app.models import User, Documents
 
+app = create_app()
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

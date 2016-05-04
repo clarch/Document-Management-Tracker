@@ -3,32 +3,32 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+	<link rel="stylesheet" type="text/css" href="../../static/CSS/styles.css"> 
 	<nav>
 	  <div class="nav-wrapper">
 	    <a href="" class="brand-logo">Logo</a>
-	    <ul id="nav-mobile" class="right hide-on-med-and-down">
-			{% if current_user.is_authenticated() %}
-			<li><a href="{{ url_for('auth.logout') }}">Sign Out</a></li>
-			{% else %}
-			<li><a href="{{ url_for('auth.login') }}">Sign In</a></li>
-			{% endif %}
-	    </ul>
-	  </div>
+	    	  </div>
 	</nav>
 </head>
 <body>
 	<h2> Signup here!</h2>
 	<section class="loginform cf">
-		<form name="login" action="index_submit" method="get" accept-charset="utf-8" style='width: 200px; margin: 20px;'>
+		<form name="login" action="/signup" method="POST" accept-charset="utf-8" style='width: 200px; margin: 20px;'>
+			{{form.csrf_token}}
     		<ul>
-		        <li><label for="usermail">Email</label>
-		        <input type="email" name="usermail" placeholder="yourname@email.com" required></li>
+    		<li><label for="name">Name</label>
+		        <input type="text" name="name" placeholder="Name" required></li>
+		        <li><label for="username">Email</label>
+		        <input type="email" name="username" placeholder="yourname@email.com" required></li>
 		        <li><label for="password">Password</label>
 		        <input type="password" name="password" placeholder="password" required></li>
+		        <li><label for="password">Confirm</label>
+		        <input type="password" name="confirm" placeholder="password" required></li>
 		        <li>
-		        <input type="submit" value="Login"></li>
+		        <input type="submit" value="Signup"></li>
     		</ul>
 		</form>
+
 	</section>
 </body>
 </html>

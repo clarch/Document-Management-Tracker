@@ -2,21 +2,34 @@ from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
+from datetime import datetime
 
 engine = create_engine('sqlite:///docmg.db', echo=True)
 Base = declarative_base()
 
-def User(Base):
+class User(Base):
 	__tablename__ = 'User'
 	id = Column(Integer, primary_key=True)
 	name = Column(String)
-	password = Column(password)
-	email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
+	password = Column(String)
+	email = Column(String(64), unique=True, index=True)
+	
+	# @property
+	# def password(self):
+	# 	raise AttributeError('password is not a readable attribute')
 
-def Documents(Base):
+	# @password.setter
+	# def password(self, password):
+	# 	self.password_hash = generate_password_hash(password)
+
+	# def verify_password(self, password):
+	# 	return check_password_hash(self.password_hash, password)
+
+class Documents(Base):
 	__tablename__ = 'Documents'
 	id = Column(Integer, primary_key=True)
 	title = Column(String)
-	modified = ()
+	modified = (datetime)
 	Department = Column(String)
+	url = Column(String)
 
