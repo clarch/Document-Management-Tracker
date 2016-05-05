@@ -3,6 +3,7 @@ from flask.ext.wtf import Form
 from wtforms import TextField, TextAreaField, SubmitField, PasswordField, BooleanField, validators
 from wtforms.validators import DataRequired, Length, Regexp
 
+
 class LoginForm(Form):
 	username = TextField('Email Address', validators=[DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])
@@ -10,6 +11,7 @@ class LoginForm(Form):
 	submit = SubmitField('Log In')
 
 class SignupForm(Form):
+
 	name = TextField('Name', validators=[DataRequired(), Length(1, 64), 
 		Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
 			'Usernames must have only letters, '

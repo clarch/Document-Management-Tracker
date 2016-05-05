@@ -1,12 +1,16 @@
-from flask import render_template, redirect, request, url_for, flash, session
+from flask import render_template, redirect, request, url_for, flash
+from sqlalchemy.orm import sessionmaker, scoped_session
 from flask.ext.login import login_user, logout_user, login_required
 from . import auth
-from .. import db
-from ..models import User
+from ..models import User, engine, metadata
 from .forms import LoginForm, SignupForm
 from flask_login import LoginManager
 
 login_manager = LoginManager()
+
+con = engine.connect()
+Session = sessionmaker(bind=con)
+session = scoped_session(Session)
 
 @login_manager.user_loader
 def load_user(id):
@@ -15,12 +19,16 @@ def load_user(id):
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.session.filter_by(username=form.username.data).first()
+
         if user is not None and user.verify_password(form.password.data):
-            login_user(user, form.remember.data)
+            login_user(user, form.remember.data)            
             return redirect(url_for('auth.login'))
+
         flash('Invalid username or password.')
+
     return render_template('auth/login.html', form=form)
 
 
@@ -37,17 +45,25 @@ def signup():
   form = SignupForm()
 
   if request.method == 'POST':
+
     if form.validate() == False:
       return render_template('auth/signup.html', form=form)
+
     else:
+
       newuser = User()
       newuser.name = form.name.data
       newuser.username = form.username.data
       newuser.password = form.password.data
-      db.session.add(newuser)
-      db.session.commit()
-       
-      return render_template(url_for('auth.login'))
+      # try:
+      import ipdb; ipdb.set_trace()
+      session.add(newuser)
+        # session.rollback() 
+      session.commit()  
+      # except:  
+      session.rollback()
+
+      return render_template('auth/login.html')
    
   elif request.method == 'GET':
     return render_template('auth/signup.html', form=form)

@@ -1,11 +1,12 @@
-from sqlalchemy import create_engine, ForeignKey
+from sqlalchemy import create_engine, MetaData, ForeignKey
 from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 from datetime import datetime
 
-engine = create_engine('sqlite:///docmg.db', echo=True)
+engine = create_engine('sqlite:///documgter.db', echo=True)
 Base = declarative_base()
+metadata = MetaData(bind=engine)
 
 class User(Base):
 	__tablename__ = 'User'
@@ -29,7 +30,10 @@ class Documents(Base):
 	__tablename__ = 'Documents'
 	id = Column(Integer, primary_key=True)
 	title = Column(String)
-	modified = (datetime)
-	Department = Column(String)
+	# created = Column()
+	# modified = Column()
+	tag = Column(String)
 	url = Column(String)
 
+Base.metadata.drop_all(engine)
+Base.metadata.create_all(engine)
