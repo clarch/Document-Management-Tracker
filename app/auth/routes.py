@@ -55,13 +55,8 @@ def signup():
       newuser.name = form.name.data
       newuser.username = form.username.data
       newuser.password = form.password.data
-      # try:
-      import ipdb; ipdb.set_trace()
       session.add(newuser)
-        # session.rollback() 
       session.commit()  
-      # except:  
-      session.rollback()
 
       return render_template('auth/login.html')
    

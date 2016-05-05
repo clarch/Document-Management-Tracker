@@ -3,24 +3,29 @@
 <head>
 	<title></title>
 	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/9materialize.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/34materialize/0.97.6/css/materialize.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/bootstrap.css">
+	<!-- <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+	<scrip --><!-- t type="text/javascript" src="/static/js/bootstrap-theme.js"></script>
+ -->
+
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 	
 	<script src="../../static/script.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../static/styles.css">
-	<nav>
-	  <div class="nav-wrapper">
-	    <a href="" class="brand-logo">Document Management Tracker</a>
-	    <a style="float: right; margin-right: 20px;"> Welcome Home </a>
-	    <a href="" class="" style="float: right; margin-right: 10px;">Upload</a>
-	    <a href="" class="" style="float: right; margin-right: 10px;">Logout</a> 	    
-	    <ul id="nav-mobile" class="right hide-on-med-and-down">
-			<li> 
-	    </ul>
-	  </div>
-	</nav>
+	<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Document Management Tracker</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="#">Page 2</a></li> 
+      <li><a href="#">Page 3</a></li> 
+    </ul>
+  </div>
+</nav>
 </head>
 <body>
 <button data-target="modal1" class="btn trigger">Modal</button>
@@ -29,31 +34,50 @@
 
 	<!-- Modal Structure -->
 	<div id="modal1" class="modal65">
-		<div class="modal-content" id="popup" onclick="">
-			<h5>Add a bookmark</h5>
-			<p></p>
-		</div>
-		<div class="modal-footer">
-		{% for fields in form %}
-			{{label}} {{fields }} {% endfor %}
-				
+				<!-- Button -->
+      <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal-3">Add</button>
 
-			<button name="submit" type="submit" value="Add">{{ form.add }}</button>
-		    </div>
-	</div>
-	<h3> Add your Tag</h3>
-	<div class="chip">
-    Tag
-    <i class="material-icons">Wait I dont know what this is going to do </i>
-  </div>
-  <div class="chip">
-    Tag
-    <i class="material-icons">Wait I dont know what this is going to do </i>
-  </div>
-  <div class="chip">
-    Tag
-    <i class="material-icons">Wait I dont know what this is going to do </i>
-  </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal-3" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header text-center">
+                    <h4><i class="fa fa-user"></i> Add a BookMark</h4>
+                </div>
+                <!--/.Header-->
+
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" style="align-items: center;">
+                            <!--Form-->
+                            <form action="{{ url_for('upload.upload') }}" method="POST">
+                                {% for fields in form %}
+									{{ label }} {{ fields }} 
+								{% endfor %}
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg waves-effect waves-light" value="Add">{{ form.add }}</button>
+                                    
+                                </div>
+
+                            </form>
+                            <!--/.Form-->
+                        </div>
+                    </div>
+                </div>
+                <!--/.Body-->
+            </div>
+        </div>
+    </div>
+    <!--/.Modal-->
+
+
+	</div>	
   </div>
 </body>
 </html>
