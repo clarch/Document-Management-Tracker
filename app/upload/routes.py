@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request, g, flash
+from flask import Flask, render_template, session, request, g, flash, redirect
 from . import upload
 from flask.ext.wtf import Form
 from wtforms.ext.sqlalchemy.orm import model_form
@@ -10,18 +10,18 @@ from app.auth.routes import session
 
 
 @upload.route('/upload', methods=['GET', 'POST'])
-def upload():
+def addurl():
 	form = AddUrlBookmark(request.form)
 	if form.validate_on_submit():
 		result = session.query(Documents).filter_by(url=form.url.data).first()
 		if result:
 			flash('Url already exists.', 'warning')
 		else:
-			bookmark = Documents(form.email.data, form.category.data, form.url.data, form.category.data)
+			bookmark = Documents(form.title.data, form.url.data, form.category.data)
 			session.add(bookmark)
 			session.commit()
 			flash('Added!', 'success')
-			render_template('upload/upload.html', form=form)
+			return redirect('/urldata')
 	return render_template('upload/upload.html', form=form)
 
 # # @upload.route('/add_bookmark')
@@ -29,4 +29,10 @@ def upload():
 # def add_bookmark(username):
 #     """Add new bookmark to database."""
 #     # import ipdb; ipdb.set_trace()
-#     
+#   
+
+@upload.route('/urldata', methods=['GET', 'POST'])
+def urldata():
+	form = AddUrlBookmark(request.form)
+	urldata = session.query(Documents).all()
+	return render_template('upload/Data.html', urldata=urldata, form=form)  

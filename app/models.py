@@ -14,7 +14,15 @@ class User(Base):
 	name = Column(String)
 	password = Column(String)
 	email = Column(String(64), unique=True, index=True)
-	
+
+	@property
+	def is_authenticated(self):
+		return True
+
+	@property
+	def is_active(self):
+		return True
+
 	# @property
 	# def password(self):
 	# 	raise AttributeError('password is not a readable attribute')
@@ -35,8 +43,7 @@ class Documents(Base):
 	created = Column(Date, default=datetime.utcnow)
 	url = Column(String)
 
-	def __init__(self, email, category, title, url):
-		self.email = email
+	def __init__(self, title, url, category,):
 		self.category = category
 		self.title = title
 		self.url = url

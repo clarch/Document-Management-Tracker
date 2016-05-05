@@ -25,9 +25,27 @@
       <li><a href="#">Page 3</a></li> 
     </ul>
   </div>
+  
 </nav>
 </head>
 <body>
+<div class="btn-group">
+  <button type="button" class="btn btn-danger">Departments</button>
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Success</a></li>
+    <li><a href="#">Training</a></li>
+    <li><a href="#">Operations</a></li>
+    <li><a href="#">Finance</a></li>
+    <li><a href="#">Recruitment</a></li>
+    <li><a href="#">Sales</a></li>
+    <li><a href="#">Marketing</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
 <button data-target="modal1" class="btn trigger">Modal</button>
 	<!-- Modal Trigger -->
 	<a href="#modal1" id="trigger" class="waves-effect waves-light btn modal-trigger" >Add</a>
@@ -55,9 +73,9 @@
                     <div class="row">
                         <div class="col-md-12" style="align-items: center;">
                             <!--Form-->
-                            <form action="{{ url_for('upload.upload') }}" method="POST">
+                            <form action="{{ url_for('upload.addurl') }}" method="POST">
                                 {% for fields in form %}
-									{{ label }} {{ fields }} 
+									<>{{ label }} {{ fields }} 
 								{% endfor %}
 
                                 <div class="text-center">

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/bootstrap.css">
+	<!-- <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+	<scrip --><!-- t type="text/javascript" src="/static/js/bootstrap-theme.js"></script>
+ -->
+
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	
+	<script src="../../static/script.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../static/styles.css">
+	<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Document Management Tracker</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="#">Page 2</a></li> 
+      <li><a href="#">Page 3</a></li> 
+    </ul>
+  </div>
+  
+</nav>
+</head>
+<body>
+<div class="btn-group">
+  <button type="button" class="btn btn-danger">Departments</button>
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Success</a></li>
+    <li><a href="#">Training</a></li>
+    <li><a href="#">Operations</a></li>
+    <li><a href="#">Finance</a></li>
+    <li><a href="#">Recruitment</a></li>
+    <li><a href="#">Sales</a></li>
+    <li><a href="#">Marketing</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
+  <div>
+
+    <table style="width:100%">
+    <br>
+      <thead>
+        <tr>
+          <th>Url_id<th>
+          <th>Title</th>
+          <th>Url</th> 
+          <th>Category</th> 
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in urldata %}
+        <tr>
+          <td> {{ data.id }} <td>
+          <td>{{  data.title }}</td>
+          <td><a href=" {{ data.url }}" target=_blank>{{ data.url }}</td> 
+          <td>{{ data.category }}</td>
+          <td>{{ data.created }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      
+    </table>
+  </div>
+	
+	
+
+	</div>	
+  </div>
+</body>
+</html>
