@@ -1,35 +1,34 @@
 from flask import render_template, redirect, request, url_for, flash
 from sqlalchemy.orm import sessionmaker, scoped_session
-from flask.ext.login import login_user, logout_user, login_required
+from flask.ext.login import login_user, logout_user, login_required, current_user, LoginManager
 from . import auth
 from ..models import User, engine, metadata
 from .forms import LoginForm, SignupForm
-from flask_login import LoginManager
 
-login_manager = LoginManager()
 
 con = engine.connect()
 Session = sessionmaker(bind=con)
 session = scoped_session(Session)
 
-@login_manager.user_loader
-def load_user(id):
-    return User.get(id)
+# @login_manager.user_loader
+# def load_user(id):
+#     return User.get(id)
 
 @auth.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
+def loginuser():
+  form = LoginForm(request.form)
+  if request.method == 'POST':
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.email.data).first()
+        user = User.query.filter_by(email==form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember.data)
-            return redirect(url_for('bookmark.bookmark'))
+            return redirect(url_for('bookmarks.bookmarks'), form=form)
         flash('Invalid username or password.')
-    return render_template('auth/login.html', form=form)
-
+  return render_template('auth/login.html', form=form)
 
 @auth.route('/logout')
 @login_required
+
 def logout():
     logout_user()
     flash('You have been logged out.')
@@ -37,7 +36,7 @@ def logout():
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
-def signup():
+def signupuser():
   form = SignupForm()
 
   if request.method == 'POST':

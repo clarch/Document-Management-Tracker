@@ -4,26 +4,29 @@
 	<title></title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
 	<nav>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
 	  <div class="nav-wrapper">
-	    <a href="" class="brand-logo">Logo</a>
+	    <a href="" class="brand-logo">Document Management Tracker</a>
 	  
 	  </div>
 	</nav>
 </head>
 <body>
-	<h2> Login in</h2>
-	<section class="loginform cf">
-		<form name="login" action="index_submit" method="get" accept-charset="utf-8" style='width: 200px; margin: 20px;'>
-    		<ul>
-		        <li><label for="usermail">Email</label>
-		        <input type="email" name="usermail" placeholder="yourname@email.com" required></li>
-		        <li><label for="password">Password</label>
-		        <input type="password" name="password" placeholder="password" required></li>
-		        <li>
-		        <input type="submit" value="Login"></li>
-    		</ul>
-		</form>
-	</section>
-	<p> click <a href="auth/signup.html" >here</a> to signup</p>
+	<div id="login" style="width: 200px; height: 300px; left: 50%;">
+		<h2> Login</h2>
+		<section class="loginform cf">
+			<form name="login" action="{{ url_for('auth.loginuser')}}" method="POST" accept-charset="utf-8" style='width: 200px; margin: 20px;'>
+	    		<ul>
+			        <li><label for="usermail">Email</label>
+			        <input type="email" name="usermail" placeholder="yourname@email.com" required></li>
+			        <li><label for="password">Password</label>
+			        <input type="password" name="password" placeholder="password" required></li>
+			        <li>
+			        <input type="submit" value="Login"></li>
+	    		</ul>
+			</form>
+		</section>
+		<p> click <a href="auth/signup.html" >here</a> to signup</p>
+	</div>
 </body>
 </html>

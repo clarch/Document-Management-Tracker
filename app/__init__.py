@@ -1,10 +1,12 @@
 from flask import Flask, Blueprint, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bootstrap import Bootstrap
-from flask_script import Manager
+from flask.ext.login import LoginManager
+
 
 db = SQLAlchemy()
 bootstrap = Bootstrap()
+login_manager = LoginManager()
 
 def create_app(config_name):
 	app = Flask(__name__)
@@ -14,6 +16,8 @@ def create_app(config_name):
 	app.register_blueprint(bookmarks)
 
 	bootstrap.init_app(app)
+
+	login_manager.init_app(app)
 
 	from auth import auth
 	app.register_blueprint(auth)

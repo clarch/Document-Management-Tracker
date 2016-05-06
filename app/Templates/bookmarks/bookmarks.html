@@ -1,3 +1,4 @@
+{% if current.user: %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,46 +16,32 @@
 	
 	<script src="../../static/script.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../static/styles.css">
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse" style="background-color: #F88379; height: 60px; border: none; color: white" >
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Document Management Tracker</a>
+      <h2>Document Management Tracker</h2>
     </div>
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav" style="float: right; margin-right: 20px; color: white;">
       <li><a href="{{ url_for('auth.login') }}">Logout</a></li> 
       <li><a href="#">Search</a></li> 
     </ul>
+    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal-3" style="float: right; margin-right: 20px; margin-top: 10px;">Add bookmark</button>
+    <br/>
   </div>
   
 </nav>
 </head>
 <body>
-<div class="btn-group">
-  <button type="button" class="btn btn-danger">Departments</button>
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="#">Success</a></li>
-    <li><a href="#">Training</a></li>
-    <li><a href="#">Operations</a></li>
-    <li><a href="#">Finance</a></li>
-    <li><a href="#">Recruitment</a></li>
-    <li><a href="#">Sales</a></li>
-    <li><a href="#">Marketing</a></li>
-    <li role="separator" class="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-</div>
+
 <button data-target="modal1" class="btn trigger">Modal</button>
 	<!-- Modal Trigger -->
-	<a href="#modal1" id="trigger" class="waves-effect waves-light btn modal-trigger" >Add</a>
+	<a href="#modal1" id="trigger" class="waves-effect waves-light btn modal-trigger" ></a>
 
 	<!-- Modal Structure -->
 	<div id="modal1" class="modal65">
 				<!-- Button -->
       <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal-3">Add</button>
+
 
     <!-- Modal -->
     <div class="modal fade" id="myModal-3" role="dialog">
@@ -67,7 +54,6 @@
                     <h4><i class="fa fa-user"></i> Add a BookMark</h4>
                 </div>
                 <!--/.Header-->
-
                 <!--Body-->
                 <div class="modal-body">
                     <div class="row">
@@ -77,10 +63,10 @@
                                 {% for fields in form %}
                                 {{ label }} {{ fields }} 
 								                {% endfor %}
-
+                                <br/>
+                                <br/>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg waves-effect waves-light" value="Add">{{ form.add }}</button>
-                                    
+                                    <button type="submit" class="btn btn-primary btn-lg waves-effect waves-light" value="Add">Add Bookmark</button>                                   
                                 </div>
 
                             </form>
@@ -93,7 +79,34 @@
         </div>
     </div>
     <!--/.Modal-->
+    <div style="width: 70%; height: 100%; border: solid; 1px;">
 
+    <table style="width:100%">
+    <br>
+      <thead class="striped">
+        <tr>
+          <th>Url_id<th>
+          <th>Title</th>
+          <th>Url</th> 
+          <th>Category</th> 
+          <th>Created</th>
+          <th>Delete<th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in urldata %}
+        <tr>
+          <td> {{ data.id }} <td>
+          <td>{{  data.title }}</td>
+          <td><a href=" {{ data.url }}" target=_blank>{{ data.url }}</td> 
+          <td>{{ data.category }}</td>
+          <td>{{ data.created }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      
+    </table>
+  </div>
 
 	</div>	
   </div>
