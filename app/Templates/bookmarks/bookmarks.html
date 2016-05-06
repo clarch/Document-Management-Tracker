@@ -1,4 +1,4 @@
-{% if current.user: %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +22,8 @@
       <h2>Document Management Tracker</h2>
     </div>
     <ul class="nav navbar-nav" style="float: right; margin-right: 20px; color: white;">
-      <li><a href="{{ url_for('auth.login') }}">Logout</a></li> 
-      <li><a href="#">Search</a></li> 
+      <li><a href="{{ url_for('auth.loginuser') }}">Logout</a></li> 
+      
     </ul>
     <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal-3" style="float: right; margin-right: 20px; margin-top: 10px;">Add bookmark</button>
     <br/>
@@ -83,6 +83,10 @@
 
     <table style="width:100%">
     <br>
+      <div>
+
+    <table style="width:100%">
+    <br>
       <thead class="striped">
         <tr>
           <th>Url_id<th>
@@ -90,7 +94,6 @@
           <th>Url</th> 
           <th>Category</th> 
           <th>Created</th>
-          <th>Delete<th>
         </tr>
       </thead>
       <tbody>
@@ -98,7 +101,7 @@
         <tr>
           <td> {{ data.id }} <td>
           <td>{{  data.title }}</td>
-          <td><a href=" {{ data.url }}" target=_blank>{{ data.url }}</td> 
+          <td><a href=" {{  data.url }}" target=_blank>{{ data.url }}</td> 
           <td>{{ data.category }}</td>
           <td>{{ data.created }}</td>
         </tr>
@@ -109,6 +112,5 @@
   </div>
 
 	</div>	
-  </div>
 </body>
 </html>

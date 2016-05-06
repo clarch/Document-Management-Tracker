@@ -11,23 +11,24 @@
 	</nav>
 </head>
 <body>
+{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    <ul class=flashes>
+	    {% for message in messages %}
+	      <li>{{ message }}</li>
+	    {% endfor %}
+	    </ul>
+	  {% endif %}
+	{% endwith %}
 	<h2> Signup here!</h2>
 	<div id="login">
 		<section class="loginform cf">
-			<form name="login" action="/signup" method="POST" accept-charset="utf-8" style='width: 200px; margin: 20px;'>
+			<form name="login" action="{{ url_for('auth.signupuser')}}" method="POST" accept-charset="utf-8" style='width: 200px; margin: 20px;'>
 				{{form.csrf_token}}
-	    		<ul>
-	    		<li><label for="name">Name</label>
-			        <input type="text" name="name" placeholder="Name" required></li>
-			        <li><label for="username">Email</label>
-			        <input type="email" name="username" placeholder="yourname@email.com" required></li>
-			        <li><label for="password">Password</label>
-			        <input type="password" name="password" placeholder="password" required></li>
-			        <li><label for="password">Confirm</label>
-			        <input type="password" name="confirm" placeholder="password" required></li>
-			        <li>
-			        <input type="submit" value="Signup"></li>
-	    		</ul>
+	    		{{ form.csrf_token }}
+	    		{% for fields in form %}
+                    {{ label }} {{ fields }} 
+				{% endfor %}
 			</form>
 		</section>
 	<div>S

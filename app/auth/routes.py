@@ -17,13 +17,20 @@ session = scoped_session(Session)
 @auth.route('/login', methods=['GET', 'POST'])
 def loginuser():
   form = LoginForm(request.form)
+  # import ipdb; ipdb.set_trace()
   if request.method == 'POST':
     if form.validate_on_submit():
-        user = User.query.filter_by(email==form.email.data).first()
-        if user is not None and user.verify_password(form.password.data):
-            login_user(user, form.remember.data)
-            return redirect(url_for('bookmarks.bookmarks'), form=form)
+        user = session.query(User).filter_by(email=form.usermail.data).first()
+        if user is not None:
+            return redirect(url_for('bookmarks.urldata'))
         flash('Invalid username or password.')
+    else:
+      for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ))
   return render_template('auth/login.html', form=form)
 
 @auth.route('/logout')
@@ -32,12 +39,12 @@ def loginuser():
 def logout():
     logout_user()
     flash('You have been logged out.')
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('auth.loginuser'))
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signupuser():
-  form = SignupForm()
+  form = SignupForm(request.form)
 
   if request.method == 'POST':
 
@@ -45,25 +52,30 @@ def signupuser():
       return render_template('auth/signup.html', form=form)
 
     else:
+      user = session.query(User).filter_by(email=form.email.data).first()
+      if user is not None:
+        flash('You have signed up successfuly')
+        return redirect(url_for('bookmarks.urldata'))
+      else:
+        newuser = User()
+        newuser.name = form.name.data
+        newuser.email = form.email.data
+        newuser.password = form.password.data
+        session.add(newuser)
+        session.commit()  
 
-      newuser = User()
-      newuser.name = form.name.data
-      newuser.username = form.email.data
-      newuser.password = form.password.data
-      session.add(newuser)
-      session.commit()  
-
-      return render_template('auth/login.html')
+      return render_template('auth/login.html', form=form)
    
   elif request.method == 'GET':
     return render_template('auth/signup.html', form=form)
 
-# @auth.before_request
-# def load_user():
-#     if session["username"]:
-#         user = User.query.filter_by(username=session["username"]).first()
-#     else:
-#         user = anonymous  # Make it better, use an anonymous User instead
+  else:
+      for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ))
 
-#     g.user = user
+
 

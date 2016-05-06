@@ -13,7 +13,7 @@ from app.auth.routes import session
 def addurl():
 	form = AddUrlBookmark(request.form)
 	if form.validate_on_submit():
-		result = session.query(Documents).filter_by(url==form.url.data).first()
+		result = session.query(Documents).filter_by(url=form.url.data).first()
 		if result:
 			flash('Url already exists.', 'warning')
 		else:

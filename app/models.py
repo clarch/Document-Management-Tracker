@@ -3,6 +3,7 @@ from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 engine = create_engine('sqlite:///documgter.db', echo=True, connect_args={'check_same_thread': False})
 Base = declarative_base()
@@ -23,16 +24,16 @@ class User(Base):
 	def is_active(self):
 		return True
 
-	# @property
-	# def password(self):
-	# 	raise AttributeError('password is not a readable attribute')
+	@property
+	def password(self):
+		raise AttributeError('password is not a readable attribute')
 
-	# @password.setter
-	# def password(self, password):
-	# 	self.password_hash = generate_password_hash(password)
+	@password.setter
+	def password(self, password):
+		self.password_hash = generate_password_hash(password)
 
-	# def verify_password(self, password):
-	# 	return check_password_hash(self.password_hash, password)
+	def verify_password(self, password):
+		return check_password_hash(self.password_hash, password)
 
 class Documents(Base):
 	__tablename__ = 'documents'
