@@ -20,20 +20,20 @@ def load_user(id):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(username=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember.data)
-            return redirect(request.args.get('next') or url_for('main.index'))
+            return redirect(url_for('bookmark.bookmark'))
         flash('Invalid username or password.')
     return render_template('auth/login.html', form=form)
 
 
-# @auth.route('/logout')
-# @login_required
-# def logout():
-#     logout_user()
-#     flash('You have been logged out.')
-#     return redirect(url_for('issue.index'))
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You have been logged out.')
+    return redirect(url_for('auth.login'))
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
@@ -49,7 +49,7 @@ def signup():
 
       newuser = User()
       newuser.name = form.name.data
-      newuser.username = form.username.data
+      newuser.username = form.email.data
       newuser.password = form.password.data
       session.add(newuser)
       session.commit()  

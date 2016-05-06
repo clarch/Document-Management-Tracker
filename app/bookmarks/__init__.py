@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-upload = Blueprint('upload', __name__)
+bookmarks = Blueprint('bookmarks', __name__)
 
 from . import routes
 

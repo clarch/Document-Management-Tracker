@@ -10,8 +10,8 @@ def create_app(config_name):
 	app = Flask(__name__)
 	app.config.from_object('config')
 	
-	from .upload import upload
-	app.register_blueprint(upload)
+	from .bookmarks import bookmarks
+	app.register_blueprint(bookmarks)
 
 	bootstrap.init_app(app)
 
