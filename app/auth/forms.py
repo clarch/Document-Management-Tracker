@@ -6,13 +6,14 @@ from wtforms.validators import DataRequired, Length, Regexp
 
 
 
-
+#Login form
 class LoginForm(Form):
 	usermail = TextField('Email Address', validators=[DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])
 	remember_me = BooleanField('Keep me signed in')
 	submit = SubmitField('Log In')
 
+# Signup Form
 class SignupForm(Form):
 
 	name = TextField('Name', validators=[DataRequired(), Length(1, 64), 
@@ -24,7 +25,4 @@ class SignupForm(Form):
 	confirm = PasswordField('Repeat Password', validators=[DataRequired()])
 	submit = SubmitField('Log In')
 
-	# def validate_email(self, field):
-	# 	import ipdb; ipdb.set_trace()
-	# 	if User.query.filter_by(email=field.usermail.data).first():
-	# 		raise ValidationError('Email already exists.')
+	

@@ -10,29 +10,31 @@ con = engine.connect()
 Session = sessionmaker(bind=con)
 session = scoped_session(Session)
 
-# @login_manager.user_loader
-# def load_user(id):
-#     return User.get(id)
 
+#Route for Login
 @auth.route('/login', methods=['GET', 'POST'])
 def loginuser():
   form = LoginForm(request.form)
-  # import ipdb; ipdb.set_trace()
   if request.method == 'POST':
+
     if form.validate_on_submit():
         user = session.query(User).filter_by(email=form.usermail.data).first()
         if user is not None:
             return redirect(url_for('bookmarks.urldata'))
         flash('Invalid username or password.')
+
     else:
       for field, errors in form.errors.items():
+
         for error in errors:
             flash(u"Error in the %s field - %s" % (
                 getattr(form, field).label.text,
                 error
             ))
+
   return render_template('auth/login.html', form=form)
 
+#Route for logout
 @auth.route('/logout')
 @login_required
 
@@ -41,7 +43,7 @@ def logout():
     flash('You have been logged out.')
     return redirect(url_for('auth.loginuser'))
 
-
+# Route for signup
 @auth.route('/signup', methods=['GET', 'POST'])
 def signupuser():
   form = SignupForm(request.form)
