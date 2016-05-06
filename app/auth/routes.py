@@ -58,6 +58,7 @@ def signupuser():
       if user is not None:
         flash('You have signed up successfuly')
         return redirect(url_for('bookmarks.urldata'))
+
       else:
         newuser = User()
         newuser.name = form.name.data
