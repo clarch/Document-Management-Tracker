@@ -1,3 +1,4 @@
+#Registering The routes, db, and bootstrap 
 from flask import Flask, Blueprint, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bootstrap import Bootstrap
